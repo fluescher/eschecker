@@ -1,8 +1,21 @@
 
-var Parser = function(base) {
-    var urlBase = base;
+var Parser = function() {
     var TEMP_REGISTERED = "provisorisch eingeschrieben";
 	var self = this;
+
+    this.getName = function(overviewHTML) {
+        var name = { 
+            "name": "",
+            "prename": ""
+        };
+
+        var nameParts = $(overviewHTML).find("div#Menu_Titel").text().trim().split(" ");
+
+        name.prename = nameParts[0];
+        name.name = nameParts[1];
+
+        return name;
+    }
 	
     this.getModules = function (overviewHTML) {
         var modules = [];
@@ -11,7 +24,7 @@ var Parser = function(base) {
         moduleTables = moduleTables.filter(function(index, element, array) { return (index != 0); });
 
         moduleTables.each(function(index, element) {
-            var acturl = $(element).find("tr td a").last()[0].href;
+            var acturl = $(element).find("tr td a").last().attr("href");
 
             $.ajax({
                 url: acturl,
@@ -27,7 +40,8 @@ var Parser = function(base) {
 
     this.parseModule = function(classListHTML) {
         var actual = new Module();
-        
+       
+        actual.name = $(classListHTML).find("div#content_mit_menu p b").text();
         var rows = $(classListHTML).find("table").find("tr");
 
         rows.each(function(index, element) {

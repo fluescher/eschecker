@@ -17,6 +17,15 @@ describe("Parser", function() {
         it("should return a list with 11 modules", function() {
             expect(parser.getModules(testOverview).length).toEqual(11);
         });
+
+        it("should parse the correct module names", function() {
+            expect(parser.getModules(testOverview)[0].name).toEqual(unescape("Usability und User Interface Design (EN) 11FS 2Ib / 30 Pl%E4tze"));
+        });
+
+        it("should parse the name of the currently logged on user", function() {
+            expect(parser.getName(testOverview).name).toEqual(unescape("L%FCscher"));
+            expect(parser.getName(testOverview).prename).toEqual("Florian");
+        });
     });
 
     

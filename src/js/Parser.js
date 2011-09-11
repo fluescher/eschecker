@@ -2,23 +2,24 @@
 var Parser = function(base) {
     var TEMP_REGISTERED = "provisorisch eingeschrieben";
 	var self = this;
+	self.searcher = new Searcher();
 	self.baseUrl = base;
-
-    this.getName = function(overviewHTML) {
-        var name = { 
+	self.myself = { 
             "name": "",
             "prename": ""
-        };
+        };;
 
+    this.getName = function(overviewHTML) {
         var nameParts = $(overviewHTML).find("div#Menu_Titel").text().trim().split(" ");
 
-        name.prename = nameParts[0];
-        name.name = nameParts[1];
+        self.myself.prename = nameParts[0];
+        self.myself.name = nameParts[1];
 
-        return name;
+        return self.myself;
     }
 	
     this.getModules = function (overviewHTML) {
+    	self.getName(overviewHTML);
         var modules = [];
 
         var moduleTables = $(overviewHTML).find("table");
@@ -51,6 +52,7 @@ var Parser = function(base) {
             }
         });
 
+		actual.amIRegistered = self.searcher.isRegistered(self.myself, actual);
         return actual;
     }
     

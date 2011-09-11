@@ -35,6 +35,7 @@ div.yellow {
 
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../js/Model.js"></script>
+<script type="text/javascript" src="../js/Searcher.js"></script>
 <script type="text/javascript" src="../js/Parser.js"></script>
 
 <script>
@@ -68,7 +69,7 @@ var ModuleView = function(_module) {
 		
 		title = document.createElement('div');
 		$(title).addClass('title');
-		$(title).addClass(self.module.isRegistered ? 'green' : 'red');
+		$(title).addClass(self.module.amIRegistered ? 'green' : 'red');
 		title.innerText = self.module.name;
 		
 		node.appendChild(title);

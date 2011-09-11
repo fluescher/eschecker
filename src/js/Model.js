@@ -10,6 +10,6 @@ var Registration = function() {
 var Module = function() {
         this.name = "";
         this.shortname = "";
-        this.whoami = "";
         this.registrations = [];
+        this.amIRegistered = false;
 };

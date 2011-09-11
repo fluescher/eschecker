@@ -1,52 +1,80 @@
 
 <style>
 body {
-      min-width:357px;
-        overflow-x:hidden;
+      min-width: 403px;
+      min-height: 400px;
 }
 
-img {
-      margin:5px;
-        border:2px solid black;
-          vertical-align:middle;
-            width:75px;
-              height:75px;
+div.module {
+	width: 400px;
+	text-align: center;
+	
+	margin: 3px;
 }
+
+div.title {
+	border-radius: 4px;
+  	-moz-border-radius: 4px;
+  	
+  	padding: 2px;
+}
+
+div.green {
+	background-color: rgb(0,255,0);
+}
+
+div.red { 
+	background-color: rgb(255,0,0);
+}
+
+div.yellow {
+	background-color: rgb(0,120,120);
+}
+
 </style>
 
+<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../js/Model.js"></script>
+<script type="text/javascript" src="../js/Parser.js"></script>
+
 <script>
-var req = new XMLHttpRequest();
-req.open(
-    "GET",
-        "http://api.flickr.com/services/rest/?" +
-                "method=flickr.photos.search&" +
-                        "api_key=90485e931f687a9b9c2a66bf58a3861a&" +
-                                "text=hello%20world&" +
-                                        "safe_search=1&" +  // 1 is "safe"
-                                                "content_type=1&" +  // 1 is "photos only"
-                                                        "sort=relevance&" +  // another good one is "interestingness-desc"
-                                                                "per_page=20",
-                                                                    true);
-req.onload = showPhotos;
-req.send(null);
+var base = "../../tests";
+var parser = new Parser(base);
+var myself = {};
 
-function showPhotos() {
-      var photos = req.responseXML.getElementsByTagName("photo");
+$.ajax({
+	url: base + "/data/overview.html",
+	success: function(data) {
+		myself = parser.getName(data);	
+		var modules = parser.getModules(data);
+		showModules(modules);
+	},
+	dataType: "text"
+});
 
-        for (var i = 0, photo; photo = photos[i]; i++) {
-                var img = document.createElement("image");
-                    img.src = constructImageURL(photo);
-                        document.body.appendChild(img);
-                          }
-}
+function showModules(modules) {
+	for(var i = 0; i < modules.length; i++) {
+		document.body.appendChild(new ModuleView(modules[i]).getNode());
+	}
+};
 
-// See: http://www.flickr.com/services/api/misc.urls.html
-function constructImageURL(photo) {
-      return "http://farm" + photo.getAttribute("farm") +
-            ".static.flickr.com/" + photo.getAttribute("server") +
-                  "/" + photo.getAttribute("id") +
-                        "_" + photo.getAttribute("secret") +
-                              "_s.jpg";
-}
+var ModuleView = function(_module) {
+	var self = this;
+	self.module = _module;
+		
+	this.getNode = function() {
+		var node = document.createElement('div');
+		node.setAttribute('class', 'module');
+		
+		title = document.createElement('div');
+		$(title).addClass('title');
+		$(title).addClass(self.module.isRegistered ? 'green' : 'red');
+		title.innerText = self.module.name;
+		
+		node.appendChild(title);
+		return node;
+	}
+};
+
 </script>
 

@@ -4,7 +4,7 @@ describe("Parser", function() {
     var testOverview;
 
     beforeEach(function() {
-        parser = new Parser();
+        parser = new Parser(".");
         $.ajax({url: "data/klassenliste.html", success: function(data) {
             testKlassenListe = data;  
         }, async: false, dataType: "text"});
@@ -27,7 +27,6 @@ describe("Parser", function() {
             expect(parser.getName(testOverview).prename).toEqual("Florian");
         });
     });
-
     
     describe("parseModule", function() {
     	it("should return a list with 36 registrations", function() {

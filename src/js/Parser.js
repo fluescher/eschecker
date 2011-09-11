@@ -1,7 +1,8 @@
 
-var Parser = function() {
+var Parser = function(base) {
     var TEMP_REGISTERED = "provisorisch eingeschrieben";
 	var self = this;
+	self.baseUrl = base;
 
     this.getName = function(overviewHTML) {
         var name = { 
@@ -27,7 +28,7 @@ var Parser = function() {
             var acturl = $(element).find("tr td a").last().attr("href");
 
             $.ajax({
-                url: acturl,
+                url: self.baseUrl + "/" + acturl,
                 success: function(data) { 
                     modules.push(self.parseModule(data));
                 },

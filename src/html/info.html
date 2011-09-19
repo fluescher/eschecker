@@ -53,6 +53,19 @@ $.ajax({
 	dataType: "text"
 });
 
+var reg = new Registration();
+reg.name ="Lüscher";
+reg.prename="Florian";
+reg.isRegistered = true;
+
+var mod = new Module();
+mod.name = "test";
+mod.registrations.push(reg);
+mod.isRegistered = true;
+
+showModules([mod]);
+
+
 function showModules(modules) {
 	for(var i = 0; i < modules.length; i++) {
 		document.body.appendChild(new ModuleView(modules[i]).getNode());
@@ -79,3 +92,4 @@ var ModuleView = function(_module) {
 
 </script>
 
+<body />

@@ -39,9 +39,28 @@ div.yellow {
 <script type="text/javascript" src="../js/Parser.js"></script>
 
 <script>
+
 var base = "../../tests";
 var parser = new Parser(base);
 var myself = {};
+
+var ModuleView = function(_module) {
+	var self = this;
+	self.module = _module;
+		
+	this.getNode = function() {
+		var node = document.createElement('div');
+		node.setAttribute('class', 'module');
+		
+		title = document.createElement('div');
+		$(title).addClass('title');
+		$(title).addClass(self.module.amIRegistered ? 'green' : 'red');
+		title.innerText = self.module.name;
+		
+		node.appendChild(title);
+		return node;
+	}
+};
 
 $.ajax({
 	url: base + "/data/overview.html",
@@ -72,23 +91,7 @@ function showModules(modules) {
 	}
 };
 
-var ModuleView = function(_module) {
-	var self = this;
-	self.module = _module;
-		
-	this.getNode = function() {
-		var node = document.createElement('div');
-		node.setAttribute('class', 'module');
-		
-		title = document.createElement('div');
-		$(title).addClass('title');
-		$(title).addClass(self.module.amIRegistered ? 'green' : 'red');
-		title.innerText = self.module.name;
-		
-		node.appendChild(title);
-		return node;
-	}
-};
+
 
 </script>
 

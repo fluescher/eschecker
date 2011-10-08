@@ -39,15 +39,34 @@ $.ajax({
 var reg = new Registration();
 reg.name ="Lüscher";
 reg.prename="Florian";
-reg.isRegistered = true;
+reg.amIRegistered = true;
+
+var reg2 = new Registration();
+reg2.name ="Lüscher";
+reg2.prename="Florian";
+reg2.amIRegistered = true;
+
+var reg3 = new Registration();
+reg3.name ="Lüscher";
+reg3.prename="Florian";
+reg3.amIRegistered = true;
 
 var mod = new Module();
-mod.name = "test";
+mod.name = "Programmieren C++ (prcpp)";
 mod.registrations.push(reg);
-mod.isRegistered = true;
+mod.registrations.push(reg2);
+mod.registrations.push(reg3);
+mod.amIRegistered = true;
+
+var mod2 = new Module();
+mod2.name = "Usability and User Interface Design (uuid)";
+mod2.registrations.push(reg);
+mod2.registrations.push(reg2);
+mod2.registrations.push(reg3);
+mod2.amIRegistered = true;
 
 function initView() {
-	showModules([mod]);
+	showModules([mod, mod2]);
 }
 
 function showModules(modules) {

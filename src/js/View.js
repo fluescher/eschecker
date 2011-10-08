@@ -1,24 +1,50 @@
 var ModuleView = function(_module) {
 	var self = this;
 	self.module = _module;
-		
+	self.node = null;
+	self.detail_node = null;
+	
+	this.toggleDetailView = function() {
+		$(self.detail_node).slideToggle();
+	}
+	
 	this.getNode = function() {
-		var node = document.createElement('div');
-		node.setAttribute('class', 'module');
+		if (self.detail_node == null) {
+			var node = document.createElement('div');
+			node.setAttribute('class', 'module');
 		
-		title = document.createElement('div');
-		$(title).addClass('title');
-		title.innerText = self.module.name;
+			var title = document.createElement('div');
+			$(title).addClass('title');
+			title.innerText = self.module.name;
 		
-		registration = document.createElement('div');
-		registration.innerText = self.module.registrations.length;
-		$(registration).addClass('registrationCount');
-		$(registration).addClass(self.module.amIRegistered ? 'green' : 'red');
+			var registration = document.createElement('div');
+			registration.innerText = self.module.registrations.length;
+			$(registration).addClass('registrationCount');
+			$(registration).addClass(self.module.amIRegistered ? 'green' : 'red');
+				
+			title.appendChild(registration);
 		
-		title.appendChild(registration);
+			self.detail_node = self.getDetailNode();
 		
-		node.appendChild(title);
+			node.onclick = self.toggleDetailView;
+			node.appendChild(title);
+			node.appendChild(self.detail_node)
+			self.node = node;
+		}
 		return node;
+	}
+	
+	this.getDetailNode = function() {
+		var detail = document.createElement('div');
+		detail.style.display = "none";
+		
+		for (var index in self.module.registrations) {
+			var reg = document.createElement('div');
+			reg.innerText = self.module.registrations[index].name;
+			detail.appendChild(reg);
+		}
+		
+		return detail;
 	}
 };
 
@@ -70,7 +96,7 @@ function initView() {
 }
 
 function showModules(modules) {
-	for(var i = 0; i < modules.length; i++) {
-		document.body.appendChild(new ModuleView(modules[i]).getNode());
+	for(var i = 0; i < 20; i++) {
+		document.body.appendChild(new ModuleView(modules[i % modules.length]).getNode());
 	}
 };

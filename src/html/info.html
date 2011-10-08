@@ -1,98 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="default.css" />
 
-<style>
-body {
-      min-width: 403px;
-      min-height: 400px;
-}
-
-div.module {
-	width: 400px;
-	text-align: center;
-	
-	margin: 3px;
-}
-
-div.title {
-	border-radius: 4px;
-  	-moz-border-radius: 4px;
-  	
-  	padding: 2px;
-}
-
-div.green {
-	background-color: rgb(0,255,0);
-}
-
-div.red { 
-	background-color: rgb(255,0,0);
-}
-
-div.yellow {
-	background-color: rgb(0,120,120);
-}
-
-</style>
-
-<script type="text/javascript" src="../lib/jquery.js"></script>
-<script type="text/javascript" src="../js/Model.js"></script>
-<script type="text/javascript" src="../js/Searcher.js"></script>
-<script type="text/javascript" src="../js/Parser.js"></script>
-
-<script>
-
-var base = "../../tests";
-var parser = new Parser(base);
-var myself = {};
-
-var ModuleView = function(_module) {
-	var self = this;
-	self.module = _module;
-		
-	this.getNode = function() {
-		var node = document.createElement('div');
-		node.setAttribute('class', 'module');
-		
-		title = document.createElement('div');
-		$(title).addClass('title');
-		$(title).addClass(self.module.amIRegistered ? 'green' : 'red');
-		title.innerText = self.module.name;
-		
-		node.appendChild(title);
-		return node;
-	}
-};
-
-$.ajax({
-	url: base + "/data/overview.html",
-	success: function(data) {
-		myself = parser.getName(data);	
-		var modules = parser.getModules(data);
-		showModules(modules);
-	},
-	dataType: "text"
-});
-
-var reg = new Registration();
-reg.name ="Lüscher";
-reg.prename="Florian";
-reg.isRegistered = true;
-
-var mod = new Module();
-mod.name = "test";
-mod.registrations.push(reg);
-mod.isRegistered = true;
-
-showModules([mod]);
-
-
-function showModules(modules) {
-	for(var i = 0; i < modules.length; i++) {
-		document.body.appendChild(new ModuleView(modules[i]).getNode());
-	}
-};
-
-
-
-</script>
-
-<body />
+		<script type="text/javascript" src="../lib/jquery.js"></script>
+		<script type="text/javascript" src="../js/Model.js"></script>
+		<script type="text/javascript" src="../js/Searcher.js"></script>
+		<script type="text/javascript" src="../js/Parser.js"></script>
+		<script type="text/javascript" src="../js/View.js"></script>
+	</head>
+	<body onload="initView()" />
+</html>

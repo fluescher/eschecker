@@ -1,0 +1,46 @@
+body {
+      min-width: 300px;
+      min-height: 300px;
+      
+      font: Helvetica 10px;
+}
+
+div.module {
+	width: 300px;
+		
+	border-radius: 2px;
+	
+	background-color: grey;
+		
+	margin: 3px;
+	cursor: default;
+}
+
+div.module:hover {
+	background-color: blue;
+}
+
+div.title {
+  	padding: 1px;
+  	padding-left: 20px;
+}
+
+div.registrationCount {
+	float: right;
+	width: 30px;
+	height: 20px;
+	
+	text-align: center;
+}
+
+div.green {
+	background-color: rgb(0,255,0);
+}
+
+div.red { 
+	background-color: rgb(255,0,0);
+}
+
+div.yellow {
+	background-color: rgb(0,120,120);
+}

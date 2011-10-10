@@ -15,10 +15,10 @@ var ModuleView = function(_module) {
 		
 			var title = document.createElement('div');
 			$(title).addClass('title');
-			title.innerText = self.module.name;
+			title.innerHTML = self.module.name;
 		
 			var registration = document.createElement('div');
-			registration.innerText = self.module.registrations.length;
+			registration.innerHTML = self.module.registrations.length;
 			$(registration).addClass('registrationCount');
 			$(registration).addClass(self.module.amIRegistered ? 'green' : 'red');
 				
@@ -46,17 +46,17 @@ var ModuleView = function(_module) {
 			var reg = document.createElement('tr');
 			
 			var data = document.createElement('td');
-			data.innerText = parseInt(index)+1;
+			data.innerHTML = parseInt(index)+1;
 			data.setAttribute('class', 'nr');
 			reg.appendChild(data);
 			
 			data = document.createElement('td');
-			data.innerText = self.module.registrations[index].prename + ' ' +  self.module.registrations[index].name;
+			data.innerHTML = self.module.registrations[index].prename + ' ' +  self.module.registrations[index].name;
 			data.setAttribute('class', 'name');
 			reg.appendChild(data);
 			
 			data = document.createElement('td');
-			data.innerText = self.module.registrations[index].points;
+			data.innerHTML = self.module.registrations[index].points;
 			data.setAttribute('class', 'points');
 			reg.appendChild(data);
 			
@@ -70,15 +70,15 @@ var ModuleView = function(_module) {
 	this.getHeader = function () {
 		var header = document.createElement('tr');
 		var h1 = document.createElement('th');
-		h1.innerText = '#';
+		h1.innerHTML = '#';
 		h1.setAttribute('class', 'nr');
 		
 		var h2 = document.createElement('th');
-		h2.innerText = 'Name';
+		h2.innerHTML = 'Name';
 		h2.setAttribute('class', 'name');
 		
 		var h3 = document.createElement('th');
-		h3.innerText = 'Punkte';
+		h3.innerHTML = 'Punkte';
 		h3.setAttribute('class', 'points');
 		
 		header.appendChild(h1);
@@ -93,24 +93,14 @@ var base = "../../tests";
 var parser = new Parser(base);
 var myself = {};
 
-$.ajax({
-	url: base + "/data/overview.html",
-	success: function(data) {
-		myself = parser.getName(data);	
-		var modules = parser.getModules(data);
-		showModules(modules);
-	},
-	dataType: "text"
-});
-
 var reg = new Registration();
-reg.name =unescape("L%FCscher");
-reg.prename="Florian";
+reg.name =unescape("Brun");
+reg.prename="Matthias";
 reg.amIRegistered = true;
 
 var reg2 = new Registration();
-reg2.name =unescape("L%FCscher");
-reg2.prename="Florian";
+reg2.name =unescape("Walther");
+reg2.prename="Patrick";
 reg2.amIRegistered = true;
 
 var reg3 = new Registration();
@@ -127,6 +117,9 @@ mod.amIRegistered = true;
 
 var mod2 = new Module();
 mod2.name = "Usability and User Interface Design (uuid)";
+for(i = 0; i<32; i++) {
+	mod2.registrations.push(reg2);
+}
 mod2.registrations.push(reg);
 mod2.registrations.push(reg2);
 mod2.registrations.push(reg3);

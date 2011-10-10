@@ -36,15 +36,56 @@ var ModuleView = function(_module) {
 	
 	this.getDetailNode = function() {
 		var detail = document.createElement('div');
+		var table = document.createElement('table');
+		
+		table.appendChild(self.getHeader());
+		
 		detail.style.display = "none";
 		
 		for (var index in self.module.registrations) {
-			var reg = document.createElement('div');
-			reg.innerText = self.module.registrations[index].name;
-			detail.appendChild(reg);
+			var reg = document.createElement('tr');
+			
+			var data = document.createElement('td');
+			data.innerText = parseInt(index)+1;
+			data.setAttribute('class', 'nr');
+			reg.appendChild(data);
+			
+			data = document.createElement('td');
+			data.innerText = self.module.registrations[index].prename + ' ' +  self.module.registrations[index].name;
+			data.setAttribute('class', 'name');
+			reg.appendChild(data);
+			
+			data = document.createElement('td');
+			data.innerText = self.module.registrations[index].points;
+			data.setAttribute('class', 'points');
+			reg.appendChild(data);
+			
+			table.appendChild(reg)
 		}
 		
+		detail.appendChild(table);
 		return detail;
+	}
+	
+	this.getHeader = function () {
+		var header = document.createElement('tr');
+		var h1 = document.createElement('th');
+		h1.innerText = '#';
+		h1.setAttribute('class', 'nr');
+		
+		var h2 = document.createElement('th');
+		h2.innerText = 'Name';
+		h2.setAttribute('class', 'name');
+		
+		var h3 = document.createElement('th');
+		h3.innerText = 'Punkte';
+		h3.setAttribute('class', 'points');
+		
+		header.appendChild(h1);
+		header.appendChild(h2);
+		header.appendChild(h3);
+		
+		return header;
 	}
 };
 
@@ -63,17 +104,17 @@ $.ajax({
 });
 
 var reg = new Registration();
-reg.name ="Lüscher";
+reg.name =unescape("L%FCscher");
 reg.prename="Florian";
 reg.amIRegistered = true;
 
 var reg2 = new Registration();
-reg2.name ="Lüscher";
+reg2.name =unescape("L%FCscher");
 reg2.prename="Florian";
 reg2.amIRegistered = true;
 
 var reg3 = new Registration();
-reg3.name ="Lüscher";
+reg3.name =unescape("L%FCscher");
 reg3.prename="Florian";
 reg3.amIRegistered = true;
 
@@ -96,7 +137,7 @@ function initView() {
 }
 
 function showModules(modules) {
-	for(var i = 0; i < 20; i++) {
+	for(var i = 0; i < 12; i++) {
 		document.body.appendChild(new ModuleView(modules[i % modules.length]).getNode());
 	}
 };

@@ -1,40 +1,71 @@
 <html>
-<head><title>My Test Extension Options</title></head>
+<head>
+	<title>Configuration</title>
+</head>
 <script type="text/javascript">
 
 	// Saves options to localStorage.
 	function save_options() {
-	  var select = document.getElementById("color");
-	  var color = select.children[select.selectedIndex].value;
-	  localStorage["favorite_color"] = color;
-
-	  // Update status to let user know options were saved.
-	  var status = document.getElementById("status");
-	  status.innerHTML = "Options Saved.";
-	  setTimeout(function() {
-		status.innerHTML = "";
-	  }, 750);
+		var select_color = document.getElementById("color");
+		var color = select_color.children[select_color.selectedIndex].value;
+		
+		var select_interval = document.getElementById("interval");
+		var interval = select_interval.children[select_interval.selectedIndex].value;
+		
+		localStorage["favorite_color"] = color;
+		localStorage["interval"] = interval;
+		
+		// Update status to let user know options were saved.
+		var status = document.getElementById("status");
+		status.innerHTML = "Options Saved.";
+		setTimeout(function() {
+			status.innerHTML = "";
+		}, 
+		750);
 	}
 
 	// Restores select box state to saved value from localStorage.
 	function restore_options() {
-	  var favorite = localStorage["favorite_color"];
-	  if (!favorite) {
-		return;
-	  }
-	  var select = document.getElementById("color");
-	  for (var i = 0; i < select.children.length; i++) {
-		var child = select.children[i];
-		if (child.value == favorite) {
-		  child.selected = "true";
-		  break;
+		var favorite = localStorage["favorite_color"];
+		var interval = localStorage["interval"];
+		
+		if (favorite) {
+			var select_color = document.getElementById("color");
+			for (var i = 0; i < select_color.children.length; i++) {
+				var child = select_color.children[i];
+				if (child.value == favorite) {
+					child.selected = "true";
+					break;
+				}
+			}
 		}
-	  }
+		
+		if(interval){
+			var select_interval = document.getElementById("interval");	
+			for (var i = 0; i < select_interval.children.length; i++) {
+				var child = select_interval.children[i];
+				if (child.value == interval) {
+					child.selected = "true";
+					break;
+				}
+			}
+		}
 	}
 
 </script>
 
-<body onload="restore_options()">
+<body onLoad="restore_options()">
+
+<p id="status"></p>
+
+Interval:
+<select id="interval">
+	<option value="30">every 30 Seconds</option>
+	<option value="60">every 1 Minute</option>
+	<option value="120">every 2 Minutes</option>
+    <option value="300">every 5 Minutes</option>
+</select>
+<br /><br />
 
 Favorite Color:
 <select id="color">
@@ -44,7 +75,7 @@ Favorite Color:
  <option value="yellow">yellow</option>
 </select>
 
-<br>
-<button onclick="save_options()">Save</button>
+<br /><br />
+<button onClick="save_options()">Save</button>
 </body>
 </html>

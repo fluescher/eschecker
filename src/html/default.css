@@ -3,8 +3,8 @@
 body {
       min-width: 308px;
       
-      font-family: Ubuntu;
-      font-size: 14px;
+      font-family: Verdana;
+      font-size: 12px;
       
       padding: 0;
       margin: 0;
@@ -13,12 +13,13 @@ body {
 
 div.module {
 	width: 300px;
-		
-	border-radius: 2px;
+	border-radius: 5px;
+	background: -webkit-gradient(linear, 0 0, 0 22, from(#666), to(#333));
+
+	line-height: 20px;
+	vertical-align: middle;
 	
-	background-color: #6D7B8D;
 	color: white;
-		
 	margin: 1px;
 	cursor: default;
 }
@@ -29,19 +30,18 @@ div.module:hover {
 
 div.title {
   	padding: 1px;
-  	padding-bottom: 3px;
   	padding-left: 5px;
 }
 
 div.registrationCount {
 	float: right;
 	width: 30px;
-	height: 20px;
+	line-height: 20px;
 	
 	border-radius: 2px;
 	text-align: center;
 	
-	color: black;
+	color: white;
 }
 
 th {
@@ -66,7 +66,7 @@ td.points {
 }
 
 div.green {
-	background-color: #6CC417;
+	background: -webkit-gradient(linear, 0 0, 0 20, from(#093), to(#060));
 }
 
 div.red { 

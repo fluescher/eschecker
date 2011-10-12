@@ -37,6 +37,7 @@ var ModuleView = function(_module) {
 	this.getDetailNode = function() {
 		var detail = document.createElement('div');
 		var table = document.createElement('table');
+		table.setAttribute('class', 'module');
 		
 		table.appendChild(self.getHeader());
 		

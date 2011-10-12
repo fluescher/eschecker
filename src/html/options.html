@@ -1,81 +1,82 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Configuration</title>
+	<title>ES-Checker Configuration</title>
+	<link rel="stylesheet" href="options.css" />
+	<script type="text/javascript" src="../js/Configuration.js"></script>
+	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript">
+		var conf = new Configuration();
+
+		// Saves options to localStorage.
+		function save_options() {	
+			var select_interval = document.getElementById("interval");
+			var interval = select_interval.children[select_interval.selectedIndex].value;
+		
+			var url_field = document.getElementById("url");
+		
+			conf.setInterval(interval);
+			conf.setURL(url_field.value);
+		
+			// Update status to let user know options were saved.
+			var status = document.getElementById("status");
+			status.innerHTML = "Optionen gespeichert.";
+			$(status).slideToggle('slow', function() {
+					setTimeout(function() {$(status).slideToggle();}, 3000);
+				});
+		}
+
+		// Restores select box state to saved value from localStorage.
+		function restore_options() {
+			var interval = conf.getInterval();
+			var url = conf.getURL();
+		
+			if(url) {
+				var url_field = document.getElementById("url");
+				url_field.value = url;
+			}
+		
+			if(interval){
+				var select_interval = document.getElementById("interval");	
+				for (var i = 0; i < select_interval.children.length; i++) {
+					var child = select_interval.children[i];
+					if (child.value == interval) {
+						child.selected = "true";
+						break;
+					}
+				}
+			}
+		}
+
+	</script>
 </head>
-<script type="text/javascript">
-
-	// Saves options to localStorage.
-	function save_options() {
-		var select_color = document.getElementById("color");
-		var color = select_color.children[select_color.selectedIndex].value;
-		
-		var select_interval = document.getElementById("interval");
-		var interval = select_interval.children[select_interval.selectedIndex].value;
-		
-		localStorage["favorite_color"] = color;
-		localStorage["interval"] = interval;
-		
-		// Update status to let user know options were saved.
-		var status = document.getElementById("status");
-		status.innerHTML = "Options Saved.";
-		setTimeout(function() {
-			status.innerHTML = "";
-		}, 
-		750);
-	}
-
-	// Restores select box state to saved value from localStorage.
-	function restore_options() {
-		var favorite = localStorage["favorite_color"];
-		var interval = localStorage["interval"];
-		
-		if (favorite) {
-			var select_color = document.getElementById("color");
-			for (var i = 0; i < select_color.children.length; i++) {
-				var child = select_color.children[i];
-				if (child.value == favorite) {
-					child.selected = "true";
-					break;
-				}
-			}
-		}
-		
-		if(interval){
-			var select_interval = document.getElementById("interval");	
-			for (var i = 0; i < select_interval.children.length; i++) {
-				var child = select_interval.children[i];
-				if (child.value == interval) {
-					child.selected = "true";
-					break;
-				}
-			}
-		}
-	}
-
-</script>
-
 <body onLoad="restore_options()">
-
-<p id="status"></p>
-
-Interval:
-<select id="interval">
-	<option value="30">every 30 Seconds</option>
-	<option value="60">every 1 Minute</option>
-	<option value="120">every 2 Minutes</option>
-    <option value="300">every 5 Minutes</option>
-</select>
-<br /><br />
-
-Favorite Color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-
-<br /><br />
-<button onClick="save_options()">Save</button>
+	<div id="status" style="display: none;">testtest</div>	
+	<div class="options">
+		<div id="header">
+			ES-Checker Konfiguration
+		</div>
+		<div class="option">
+			<div class="label">Interval:</div>
+			<div class="value">
+				<select id="interval">
+					<option value="30">30 Sekunden</option>
+					<option value="60">1 Minuten</option>
+					<option value="120">2 Minuten</option>
+					<option value="300">5 Minuten</option>
+				</select>
+			</div>
+			<div class="desc">Gibt die Zeitspanne an, welche zwischen zwei Abfragen an das System vergeht.</div>
+		</div>
+		<div class="option">	
+			<div class="label">ES System URL:</div>
+			<div class="value">
+				<input id="url" type="text" />
+			</div>
+			<div class="desc">Die URL zu dem ES-System. Falls Sie dies nicht manuell konfigurieren m&ouml;chten, k&ouml;nnen Sie auch auf
+			die Seite navigieren und mit einem Klick auf das ES-Checker Icon die Konfiguration &uuml;bernehmen.</div>
+		</div>
+		<button id="save" onClick="save_options()">Speichern</button>
+	</div>
 </body>
 </html>

@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html>
 	<head>
+    	<script type="text/javascript" src="../js/klassenliste_test.js"></script>
+        <script type="text/javascript" src="../lib/jquery.js"></script>
+        <script type="text/javascript" src="../js/Model.js"></script>
+		<script type="text/javascript" src="../js/Searcher.js"></script>
+        <script type="text/javascript" src="../js/Parser.js"></script>
 		<script>
-			var checkInteval = 30;
+			var checkInterval = 30000;
+			var parser = new Parser();
+			var modules = new Array();
+			
 			if(localStorage["interval"])
 				checkInterval = localStorage["interval"];
-				
+
 			var unregisteredModules = 0;
 			
+			//TODO fetch Modules from page
+			parser.getName(klassenliste_test);
 			
+			checkModules();
+			setInterval(checkModules(), checkInterval);
 			
-			if(unregisteredModules > 0){
-				chrome.browserAction.setBadgeBackgroundColor({
-					color: [255, 0, 0, 255]
-				});
+			function checkModules(){
+				unregisteredModules = 0;
+				modules[0] = parser.parseModule(klassenliste_test);
 				
-				chrome.browserAction.setBadgeText({text: '' + unregisteredModules});
-			}
-			
+				for(var j in modules){
+					if(!modules[j].amIRegistered)
+						unregisteredModules++;
+				}
+				
+				if(unregisteredModules > 0){
+					chrome.browserAction.setBadgeBackgroundColor({
+						color: [255, 0, 0, 255]
+					});
+					
+					chrome.browserAction.setBadgeText({text: '' + unregisteredModules});
+				}
+			};
 		</script>
 </html>

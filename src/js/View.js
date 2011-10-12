@@ -90,53 +90,17 @@ var ModuleView = function(_module) {
 	}
 };
 
-var base = "../../tests";
-var parser = new Parser(base);
-var myself = {};
-
-var reg = new Registration();
-reg.position = Math.floor(Math.random()*30);
-reg.name =unescape("Brun");
-reg.prename="Matthias";
-reg.amIRegistered = true;
-
-var reg2 = new Registration();
-reg2.position = Math.floor(Math.random()*30);
-reg2.name =unescape("Walther");
-reg2.prename="Patrick";
-reg2.amIRegistered = true;
-
-var reg3 = new Registration();
-reg3.position = Math.floor(Math.random()*30);
-reg3.name =unescape("L%FCscher");
-reg3.prename="Florian";
-reg3.amIRegistered = true;
-
-var mod = new Module();
-mod.name = "Programmieren C++ (prcpp)";
-mod.registrations.push(reg);
-mod.registrations.push(reg2);
-mod.registrations.push(reg3);
-mod.amIRegistered = true;
-mod.position = Math.floor(Math.random()*30);
-
-var mod2 = new Module();
-mod2.name = "Usability and User Interface Design (uuid)";
-for(i = 0; i<32; i++) {
-	mod2.registrations.push(reg2);
-}
-mod2.registrations.push(reg);
-mod2.registrations.push(reg2);
-mod2.registrations.push(reg3);
-mod2.amIRegistered = true;
-mod2.position = Math.floor(Math.random()*30);
-
 function initView() {
-	showModules([mod, mod2]);
-}
+	chrome.browserAction.setBadgeText({text: ''});
+	
+	bg = chrome.extension.getBackgroundPage();
+	bg.unregisteredModules = 0;
+	
+	showModules(bg.modules);
+};
 
 function showModules(modules) {
-	for(var i = 0; i < 12; i++) {
+	for(var i in modules) {
 		document.body.appendChild(new ModuleView(modules[i % modules.length]).getNode());
 	}
 };

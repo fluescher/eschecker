@@ -1,6 +1,6 @@
 var Registration = function() {
         this.prename = "";
-        this.lastname = "";
+        this.name = "";
         this.classe = "";
         this.position = 0;
         this.isRegistered = false;
@@ -10,6 +10,7 @@ var Registration = function() {
 var Module = function() {
         this.name = "";
         this.shortname = "";
+		this.position = 0;
         this.registrations = [];
         this.amIRegistered = false;
 };

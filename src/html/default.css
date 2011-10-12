@@ -1,7 +1,7 @@
- html { overflow-y: scroll; overflow-x: hidden }
+html { overflow-y: scroll; overflow-x: hidden }
 
 body {
-      min-width: 308px;
+      min-width: 348px;
       
       font-family: Helvetica, Verdana;
       font-size: 12px;
@@ -12,7 +12,7 @@ body {
 }
 
 div.module {
-	width: 300px;
+	width: 340px;
 	border-radius: 5px;
 	background: -webkit-gradient(linear, 0 0, 0 22, from(#666), to(#333));
 
@@ -35,7 +35,7 @@ div.title {
 
 div.registrationCount {
 	float: right;
-	width: 30px;
+	width: 50px;
 	line-height: 20px;
 	
 	border-radius: 2px;
@@ -44,16 +44,24 @@ div.registrationCount {
 	color: white;
 }
 
+table.module {
+	width: 100%;	
+}
+
+table.module td, table.module th {
+	border-bottom: 1px solid #AAA;	
+}
+
+table.module tr:nth-last-child(1) td:nth-last-child(-n+3) {
+	border-bottom: none;	
+}
+
 th {
 	text-align: left;
 }
 
-th.nr {
+th.nr, th.points {
 	text-align: center;
-}
-
-td.name {
-	width: 75%;
 }
 
 td.nr {
@@ -61,7 +69,12 @@ td.nr {
 	text-align: center;
 }
 
+td.name {
+	width: 265px;
+}
+
 td.points {
+	width: 50px;
 	text-align: center;
 }
 

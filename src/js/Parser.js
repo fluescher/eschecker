@@ -52,7 +52,16 @@ var Parser = function(base) {
             }
         });
 
-		actual.amIRegistered = self.searcher.isRegistered(self.myself, actual);
+		var registration = new Registration();
+		registration = self.searcher.getMyRegistration(self.myself, actual);
+		
+		if(registration){
+			actual.position = registration.position;
+			
+			if(registration.isRegistered)
+				actual.amIRegistered = true;
+		}
+			
         return actual;
     }
     

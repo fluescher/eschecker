@@ -45,7 +45,8 @@ div.registrationCount {
 }
 
 table.module {
-	width: 100%;	
+	width: 100%;
+	border-collapse: collapse;
 }
 
 table.module td, table.module th {

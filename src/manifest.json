@@ -1,13 +1,16 @@
 {
     "name": "ES Checker",
-    "version": "0.1",
+    "version": "0.2",
     "description": "Check the modules you are written in and get notifications when something's changed.",
     "browser_action": {
         "default_icon": "img/logo.png",
+		"default_title": "ES Checker",
         "popup": "html/info.html"
     },
     "options_page": "html/options.html",
     "permissions": [
-        "http://api.flickr.com/"
-    ]
+        "http://es.fhnw.ch/",
+		"tabs"
+    ],
+	"background_page": "html/background.html"
 }

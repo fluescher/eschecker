@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			var checkInteval = 30;
+			if(localStorage["interval"])
+				checkInterval = localStorage["interval"];
+				
+			var unregisteredModules = 0;
+			
+			
+			
+			if(unregisteredModules > 0){
+				chrome.browserAction.setBadgeBackgroundColor({
+					color: [255, 0, 0, 255]
+				});
+				
+				chrome.browserAction.setBadgeText({text: '' + unregisteredModules});
+			}
+			
+		</script>
+</html>

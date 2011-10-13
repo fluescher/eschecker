@@ -6,13 +6,14 @@
         <script type="text/javascript" src="../js/Model.js"></script>
 		<script type="text/javascript" src="../js/Searcher.js"></script>
         <script type="text/javascript" src="../js/Parser.js"></script>
+        <script type="text/javascript" src="../js/Configuration.js"></script>
 		<script>
 			var checkInterval = 30000;
 			var parser = new Parser();
 			var modules = new Array();
+			var conf = new Configuration();
 			
-			if(localStorage["interval"])
-				checkInterval = localStorage["interval"];
+			checkInterval = conf.getInterval();
 
 			var unregisteredModules = 0;
 			

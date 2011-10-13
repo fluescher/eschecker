@@ -1,11 +1,19 @@
 var ModuleView = function(_module) {
 	var self = this;
+	self.MAX_TITLE_LENGTH = 45;
 	self.module = _module;
 	self.node = null;
 	self.detail_node = null;
 	
 	this.toggleDetailView = function() {
 		$(self.detail_node).slideToggle();
+	}
+	
+	this.getReadableTitle = function(title) {
+		if (title.length>self.MAX_TITLE_LENGTH) {
+			return (title.substring(0, self.MAX_TITLE_LENGTH) + "...");
+		}
+		return title;
 	}
 	
 	this.getNode = function() {
@@ -15,7 +23,7 @@ var ModuleView = function(_module) {
 		
 			var title = document.createElement('div');
 			$(title).addClass('title');
-			title.innerHTML = self.module.name;
+			title.innerHTML = self.getReadableTitle(self.module.name);
 		
 			var registration = document.createElement('div');
 			registration.innerHTML = self.module.position + " / " + self.module.registrations.length;

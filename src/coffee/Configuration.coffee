@@ -1,3 +1,4 @@
+
 class Configuration
 	getUrl: () -> 
 		return localStorage["url"]

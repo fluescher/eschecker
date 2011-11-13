@@ -12,6 +12,10 @@ class Module
 	position: 0
 	registrations: []
 	amIRegistered: false
+	
+	constructor: () ->
+		@registrations = []
+
 
 root = exports ? this
 root.Registration = Registration

@@ -1,5 +1,5 @@
 class Parser
-	@TEMP_REGISTERED: "provisorisch eingeschrieben"
+	TEMP_REGISTERED: "provisorisch eingeschrieben"
 	myself: { name: "", prename: "" }
 	baseUrl: ""
 	searcher: new Searcher()
@@ -40,7 +40,7 @@ class Parser
 		rows = $(classListHTML).find("table").find("tr")
 
 		rows.each((index, element) =>
-			actual.registrations.push(@parseRegistration(element)) if (@containsRegistration(index, element, rows))
+			actual.registrations.push(@parseRegistration(element)) if @containsRegistration(index, element, rows)
 		);
 
 		registration = new Registration()

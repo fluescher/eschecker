@@ -12,12 +12,14 @@
     return Registration;
   })();
   Module = (function() {
-    function Module() {}
     Module.prototype.name = "";
     Module.prototype.shortname = "";
     Module.prototype.position = 0;
     Module.prototype.registrations = [];
     Module.prototype.amIRegistered = false;
+    function Module() {
+      this.registrations = [];
+    }
     return Module;
   })();
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
@@ -50,6 +52,9 @@
     Configuration.prototype.getUrl = function() {
       return localStorage["url"];
     };
+    Configuration.prototype.getInterval = function() {
+      return localStorage["interval"];
+    };
     Configuration.prototype.setInterval = function(interval) {
       return localStorage["interval"] = interval;
     };
@@ -61,7 +66,7 @@
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.Configuration = Configuration;
   Parser = (function() {
-    Parser.TEMP_REGISTERED = "provisorisch eingeschrieben";
+    Parser.prototype.TEMP_REGISTERED = "provisorisch eingeschrieben";
     Parser.prototype.myself = {
       name: "",
       prename: ""

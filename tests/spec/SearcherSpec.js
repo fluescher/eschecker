@@ -13,7 +13,7 @@ describe("Searcher", function() {
         
         var mod = new Module();
         mod.name ="test";
-        
+		mod.registrations = [];1
         mod.registrations.push(reg1);
         
         module = mod;

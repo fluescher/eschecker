@@ -1,7 +1,9 @@
 CHROME_BIN := $(shell which chromium-browser)
 COFFEE_BIN := $(shell which coffee)
 
+
 COFFEE_DIR 	 := src/coffee
+COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee 
 JS_DIR		 := src/js
 JS_SCRIPT	 := eschecker.js
 
@@ -30,7 +32,7 @@ prepare: clean
 
 compile: prepare
 	@echo "Compiling coffeescript..."
-	@$(COFFEE_BIN) -jcp $(COFFEE_DIR)/*.coffee > $(JS_DIR)/$(JS_SCRIPT)
+	@$(COFFEE_BIN) --join $(JS_DIR)/$(JS_SCRIPT) --compile $(COFFEE_FILES) 
 	
 copy: compile
 	@echo "Copy files to $(UNPACKED_DIR)..."

@@ -13,3 +13,7 @@ class Module
 	registrations: []
 	amIRegistered: false
 
+root = exports ? this
+root.Registration = Registration
+root.Module = Module
+

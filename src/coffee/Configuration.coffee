@@ -9,3 +9,6 @@ class Configuration
 	setURL: (url) ->
 		localStorage["url"] = url
 
+root = exports ? this
+root.Configuration = Configuration
+

@@ -1,9 +1,8 @@
 CHROME_BIN := $(shell which chromium-browser)
 COFFEE_BIN := $(shell which coffee)
 
-
 COFFEE_DIR 	 := src/coffee
-COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee 
+COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee $(COFFEE_DIR)/ModuleView.coffee
 JS_DIR		 := src/js
 JS_SCRIPT	 := eschecker.js
 

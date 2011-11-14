@@ -1,5 +1,5 @@
 (function() {
-  var Configuration, Module, Parser, Registration, Searcher, root;
+  var Configuration, Module, ModuleView, Parser, Registration, Searcher, root;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Registration = (function() {
     function Registration() {}
@@ -146,4 +146,118 @@
   })();
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.Parser = Parser;
+  ModuleView = (function() {
+    ModuleView.prototype.module = null;
+    ModuleView.prototype.node = null;
+    ModuleView.prototype.detail_node = null;
+    ModuleView.prototype.MAX_TITLE_LENGTH = 45;
+    function ModuleView(modul) {
+      this.toggleDetailView = __bind(this.toggleDetailView, this);      this.module = modul;
+    }
+    ModuleView.prototype.toggleDetailView = function() {
+      return $(this.detail_node).slideToggle();
+    };
+    ModuleView.prototype.getReadableTitle = function(title) {
+      if (title.length > this.MAX_TITLE_LENGTH) {
+        return title.substring(0, this.MAX_TITLE_LENGTH) + "...";
+      } else {
+        return title;
+      }
+    };
+    ModuleView.prototype.getNode = function() {
+      var node, registration, title;
+      if (this.detail_node === null) {
+        node = document.createElement('div');
+        node.setAttribute('class', 'module');
+        title = document.createElement('div');
+        $(title).addClass('title');
+        title.innerHTML = this.getReadableTitle(this.module.name);
+        registration = document.createElement('div');
+        registration.innerHTML = this.module.position + " / " + this.module.registrations.length;
+        $(registration).addClass('registrationCount');
+        if (this.module.amIRegistered) {
+          $(registration).addClass('green');
+        } else {
+          $(registration).addClass('red');
+        }
+        title.appendChild(registration);
+        this.detail_node = this.getDetailNode();
+        node.onclick = this.toggleDetailView;
+        node.appendChild(title);
+        node.appendChild(this.detail_node);
+        this.node = node;
+      }
+      return node;
+    };
+    ModuleView.prototype.getDetailNode = function() {
+      var data, detail, index, reg, regist, table, _i, _len, _ref;
+      detail = document.createElement('div');
+      table = document.createElement('table');
+      table.setAttribute('class', 'module');
+      table.appendChild(this.getHeader());
+      detail.style.display = "none";
+      index = 0;
+      _ref = this.module.registrations;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        regist = _ref[_i];
+        index = index + 1;
+        reg = document.createElement('tr');
+        data = document.createElement('td');
+        data.innerHTML = index;
+        data.setAttribute('class', 'nr');
+        reg.appendChild(data);
+        data = document.createElement('td');
+        data.innerHTML = regist.prename + ' ' + regist.name;
+        data.setAttribute('class', 'name');
+        reg.appendChild(data);
+        data = document.createElement('td');
+        data.innerHTML = regist.points;
+        data.setAttribute('class', 'points');
+        reg.appendChild(data);
+        table.appendChild(reg);
+      }
+      detail.appendChild(table);
+      return detail;
+    };
+    ModuleView.prototype.getHeader = function() {
+      var h1, h2, h3, header;
+      header = document.createElement('tr');
+      h1 = document.createElement('th');
+      h1.innerHTML = '#';
+      h1.setAttribute('class', 'nr');
+      h2 = document.createElement('th');
+      h2.innerHTML = 'Name';
+      h2.setAttribute('class', 'name');
+      h3 = document.createElement('th');
+      h3.innerHTML = 'Punkte';
+      h3.setAttribute('class', 'points');
+      header.appendChild(h1);
+      header.appendChild(h2);
+      header.appendChild(h3);
+      return header;
+    };
+    ModuleView.initView = function() {
+      var bg;
+      chrome.browserAction.setBadgeText({
+        text: ""
+      });
+      bg = chrome.extension.getBackgroundPage();
+      bg.unregisteredModules = 0;
+      if (bg.modules) {
+        return this.showModules(bg.modules);
+      }
+    };
+    ModuleView.showModules = function(modules) {
+      var mod, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = modules.length; _i < _len; _i++) {
+        mod = modules[_i];
+        _results.push(document.body.appendChild(new ModuleView(mod).getNode()));
+      }
+      return _results;
+    };
+    return ModuleView;
+  })();
+  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+  root.ModuleView = ModuleView;
 }).call(this);

@@ -1,4 +1,5 @@
-class Parser
+
+class Parser 
 	TEMP_REGISTERED: "provisorisch eingeschrieben"
 	myself: { name: "", prename: "" }
 	baseUrl: ""
@@ -65,10 +66,9 @@ class Parser
 		cur.points = parseInt($(children[4]).text())
 		cur.isRegistered = $(children[5]).text().trim() == @TEMP_REGISTERED
 		cur.classe = $(children[3]).text().trim()
-		
+
 		return cur
 
 root = exports ? this
 root.Parser = Parser
-
 

@@ -1,5 +1,5 @@
 (function() {
-  var Configuration, Module, ModuleView, Parser, Registration, Searcher, root;
+  var Configuration, ESChecker, Module, ModuleView, Parser, Registration, Searcher, root;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Registration = (function() {
     function Registration() {}
@@ -9,6 +9,7 @@
     Registration.prototype.position = 0;
     Registration.prototype.isRegistered = false;
     Registration.prototype.points = 0;
+    Registration.prototype.itsMe = false;
     return Registration;
   })();
   Module = (function() {
@@ -28,7 +29,18 @@
   Searcher = (function() {
     function Searcher() {
       this.getMyRegistration = __bind(this.getMyRegistration, this);
+      this.getUnregisteredCount = __bind(this.getUnregisteredCount, this);
     }
+    Searcher.prototype.getUnregisteredCount = function(modules) {
+      var cnt, mod, _i, _len, _results;
+      cnt = 0;
+      _results = [];
+      for (_i = 0, _len = modules.length; _i < _len; _i++) {
+        mod = modules[_i];
+        _results.push(!mod.amIRegistered ? cnt++ : void 0);
+      }
+      return _results;
+    };
     Searcher.prototype.getMyRegistration = function(name, module) {
       var reg, registration, _i, _len, _ref;
       registration = new Registration();
@@ -121,6 +133,7 @@
       }, this));
       registration = new Registration();
       registration = this.searcher.getMyRegistration(this.myself, actual);
+      registration.itsMe = true;
       if (registration) {
         actual.position = registration.position;
         actual.amIRegistered = registration.isRegistered;
@@ -202,6 +215,9 @@
         regist = _ref[_i];
         index = index + 1;
         reg = document.createElement('tr');
+        if (regist.itsMe) {
+          reg.setAttribute('class', 'me');
+        }
         data = document.createElement('td');
         data.innerHTML = index;
         data.setAttribute('class', 'nr');
@@ -243,8 +259,8 @@
       });
       bg = chrome.extension.getBackgroundPage();
       bg.unregisteredModules = 0;
-      if (bg.modules) {
-        return this.showModules(bg.modules);
+      if (bg.checker.getModules()) {
+        return this.showModules(bg.checker.getModules());
       }
     };
     ModuleView.showModules = function(modules) {
@@ -260,4 +276,32 @@
   })();
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.ModuleView = ModuleView;
+  ESChecker = (function() {
+    function ESChecker(config) {
+      this.config = config;
+      this.parser = new Parser();
+      this.searcher = new Searcher();
+      this.modules = new Array();
+    }
+    ESChecker.prototype.getModules = function() {
+      return this.modules;
+    };
+    ESChecker.prototype.check = function() {
+      var cnt;
+      this.modules = new Array();
+      cnt = 0;
+      this.parser.getName(klassenliste_test);
+      this.modules[0] = this.parser.parseModule(klassenliste_test);
+      cnt = this.searcher.getUnregisteredCount(this.modules);
+      return this.onupdate(this.modules, cnt);
+    };
+    ESChecker.prototype.startChecking = function() {
+      this.check();
+      return setInterval(this.check, this.config.getInterval());
+    };
+    ESChecker.prototype.onupdate = function(modules, unregistered_count) {};
+    return ESChecker;
+  })();
+  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+  root.ESChecker = ESChecker;
 }).call(this);

@@ -5,31 +5,11 @@
         <script type="text/javascript" src="../lib/jquery.js"></script>
         <script type="text/javascript" src="../js/eschecker.js"></script>
 		<script>
-			var checkInterval = 30000;
-			var parser = new Parser();
-			var modules = new Array();
 			var conf = new Configuration();
+			var checker = new ESChecker(conf);
 			
-			checkInterval = conf.getInterval();
-
-			var unregisteredModules = 0;
-			
-			//TODO fetch Modules from page
-			parser.getName(klassenliste_test);
-			
-			checkModules();
-			setInterval(checkModules(), checkInterval);
-			
-			function checkModules(){
-				unregisteredModules = 0;
-				modules[0] = parser.parseModule(klassenliste_test);
-				
-				for(var j in modules){
-					if(!modules[j].amIRegistered)
-						unregisteredModules++;
-				}
-				
-				if(unregisteredModules > 0){
+			checker.onupdate = function checkModules(mods, cnt){		
+				if(cnt > 0){
 					chrome.browserAction.setBadgeBackgroundColor({
 						color: [255, 0, 0, 255]
 					});
@@ -37,5 +17,8 @@
 					chrome.browserAction.setBadgeText({text: '' + unregisteredModules});
 				}
 			};
+			
+			checker.startChecking();
+			
 		</script>
 </html>

@@ -53,6 +53,10 @@ table.module td, table.module th {
 	border-bottom: 1px solid #AAA;	
 }
 
+table.module tr.me {
+	background-color: #666;
+}
+
 table.module tr:nth-last-child(1) td:nth-last-child(-n+3) {
 	border-bottom: none;	
 }

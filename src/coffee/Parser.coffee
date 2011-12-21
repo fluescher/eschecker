@@ -46,6 +46,7 @@ class Parser
 
 		registration = new Registration()
 		registration = @searcher.getMyRegistration(@myself, actual)
+		registration.itsMe = true
 
 		if(registration)
 			actual.position = registration.position

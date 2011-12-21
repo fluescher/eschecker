@@ -1,4 +1,10 @@
 class Searcher
+	getUnregisteredCount: (modules) => 
+		cnt = 0
+	
+		for mod in modules
+			cnt++ if !mod.amIRegistered
+
 	getMyRegistration: (name, module) => 
 		registration = new Registration()
 

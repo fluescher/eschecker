@@ -57,6 +57,8 @@ class ModuleView
 			index = index+1
 			reg = document.createElement('tr')
 			
+			reg.setAttribute('class', 'me') if regist.itsMe
+
 			data = document.createElement('td')
 			data.innerHTML = index
 			data.setAttribute('class', 'nr')
@@ -102,8 +104,8 @@ class ModuleView
 		chrome.browserAction.setBadgeText({text: ""})
 		bg = chrome.extension.getBackgroundPage()
 		bg.unregisteredModules = 0
-		if (bg.modules)
-			@showModules(bg.modules)
+		if (bg.checker.getModules())
+			@showModules(bg.checker.getModules())
 
 	@showModules: (modules) ->
 		for mod in modules

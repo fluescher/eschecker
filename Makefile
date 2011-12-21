@@ -7,7 +7,7 @@ COFFEE_BIN := $(shell which coffee)
 JS_DIR		 := src/js
 JS_SCRIPT	 := eschecker.js
 COFFEE_DIR 	 := src/coffee
-COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee $(COFFEE_DIR)/ModuleView.coffee
+COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee $(COFFEE_DIR)/ModuleView.coffee $(COFFEE_DIR)/ESChecker.coffee
 COFFEE_FILE  := $(JS_DIR)/eschecker.coffee
 
 TARGET_DIR	 := target

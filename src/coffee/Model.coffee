@@ -5,6 +5,7 @@ class Registration
 	position: 0
 	isRegistered: false
 	points: 0
+	itsMe: false
 
 class Module
 	name: ""

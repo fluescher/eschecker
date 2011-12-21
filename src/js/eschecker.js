@@ -70,7 +70,7 @@
     Configuration.prototype.setInterval = function(interval) {
       return localStorage["interval"] = interval;
     };
-    Configuration.prototype.setURL = function(url) {
+    Configuration.prototype.setUrl = function(url) {
       return localStorage["url"] = url;
     };
     return Configuration;

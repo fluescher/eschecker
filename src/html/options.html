@@ -16,7 +16,7 @@
 			var url_field = document.getElementById("url");
 		
 			conf.setInterval(interval);
-			conf.setURL(url_field.value);
+			conf.setUrl(url_field.value);
 		
 			// Update status to let user know options were saved.
 			var status = document.getElementById("status");
@@ -29,7 +29,7 @@
 		// Restores select box state to saved value from localStorage.
 		function restore_options() {
 			var interval = conf.getInterval();
-			var url = conf.getURL();
+			var url = conf.getUrl();
 		
 			if(url) {
 				var url_field = document.getElementById("url");

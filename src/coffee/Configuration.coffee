@@ -9,7 +9,7 @@ class Configuration
 	setInterval: (interval) ->
 		localStorage["interval"] = interval
 
-	setURL: (url) ->
+	setUrl: (url) ->
 		localStorage["url"] = url
 
 root = exports ? this

@@ -1,4 +1,7 @@
 CHROME_BIN := $(shell which chromium-browser)
+ifeq ($(strip $(CHROME_BIN)),)
+	override CHROME_BIN = $(shell which chrome-browser)
+endif
 COFFEE_BIN := $(shell which coffee)
 
 JS_DIR		 := src/js
@@ -12,9 +15,7 @@ UNPACKED_DIR := $(TARGET_DIR)/unpacked
 PACKED_DIR	 := $(TARGET_DIR)/packed
 EXT_FILE	 := $(PACKED_DIR)/eschecker.crx
 
-all: build
-
-build: package
+all: package
 
 check:
 	@echo "Checking environment..."
@@ -30,9 +31,11 @@ prepare: clean
 	@mkdir -p $(UNPACKED_DIR)
 	@mkdir -p $(PACKED_DIR)
 
-compile: prepare
+concat:
 	@echo "Concatenating coffee files..."
 	@cat $(COFFEE_FILES) > $(COFFEE_FILE)
+	
+compile: prepare concat
 	@echo "Compiling coffeescript..."
 	@$(COFFEE_BIN) --compile $(COFFEE_FILE)
 	@rm $(COFFEE_FILE)

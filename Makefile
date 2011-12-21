@@ -1,10 +1,11 @@
 CHROME_BIN := $(shell which chromium-browser)
 COFFEE_BIN := $(shell which coffee)
 
-COFFEE_DIR 	 := src/coffee
-COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee $(COFFEE_DIR)/ModuleView.coffee
 JS_DIR		 := src/js
 JS_SCRIPT	 := eschecker.js
+COFFEE_DIR 	 := src/coffee
+COFFEE_FILES := $(COFFEE_DIR)/Model.coffee $(COFFEE_DIR)/Searcher.coffee $(COFFEE_DIR)/Configuration.coffee $(COFFEE_DIR)/Parser.coffee $(COFFEE_DIR)/ModuleView.coffee
+COFFEE_FILE  := $(JS_DIR)/eschecker.coffee
 
 TARGET_DIR	 := target
 UNPACKED_DIR := $(TARGET_DIR)/unpacked
@@ -30,8 +31,11 @@ prepare: clean
 	@mkdir -p $(PACKED_DIR)
 
 compile: prepare
+	@echo "Concatenating coffee files..."
+	@cat $(COFFEE_FILES) > $(COFFEE_FILE)
 	@echo "Compiling coffeescript..."
-	@$(COFFEE_BIN) --join $(JS_DIR)/$(JS_SCRIPT) --compile $(COFFEE_FILES) 
+	@$(COFFEE_BIN) --compile $(COFFEE_FILE)
+	@rm $(COFFEE_FILE)
 	
 copy: compile
 	@echo "Copy files to $(UNPACKED_DIR)..."

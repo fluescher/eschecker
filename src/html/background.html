@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    	<script type="text/javascript" src="../js/klassenliste_test.js"></script>
         <script type="text/javascript" src="../lib/jquery.js"></script>
         <script type="text/javascript" src="../js/eschecker.js"></script>
 		<script>
 			var conf = new Configuration();
 			var checker = new ESChecker(conf);
-			
-			checker.onupdate = function checkModules(mods, cnt){		
-				if(cnt > 0){
-					chrome.browserAction.setBadgeBackgroundColor({
-						color: [255, 0, 0, 255]
-					});
-					
-					chrome.browserAction.setBadgeText({text: '' + unregisteredModules});
-				}
-			};
-			
+						
 			checker.startChecking();
 		</script>
 	</head>

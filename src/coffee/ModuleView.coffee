@@ -2,7 +2,7 @@ class ModuleView
 	module: null
 	node: null
 	detail_node: null
-	MAX_TITLE_LENGTH: 45
+	MAX_TITLE_LENGTH: 40
 	
 	constructor: (modul) ->
 		@module = modul
@@ -99,20 +99,5 @@ class ModuleView
 		
 		return header
 
-
-	@initView: () ->
-		chrome.browserAction.setBadgeText({text: ""})
-		bg = chrome.extension.getBackgroundPage()
-		bg.unregisteredModules = 0
-		if (bg.checker.getModules())
-			@showModules(bg.checker.getModules())
-
-	@showModules: (modules) ->
-		for mod in modules
-			document.body.appendChild(new ModuleView(mod).getNode())
-
 root = exports ? this
 root.ModuleView = ModuleView
-
-
-

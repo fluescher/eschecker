@@ -1,6 +1,6 @@
 {
     "name": "ES Checker",
-    "version": "0.2",
+    "version": "0.3",
     "description": "Check the modules you are written in and get notifications when something's changed.",
     "icons": {
     	"128": "img/logo.png"
@@ -12,7 +12,7 @@
     },
     "options_page": "html/options.html",
     "permissions": [
-        "http://es.fhnw.ch/",
+        "https://es.fhnw.ch/",
 		"tabs"
     ],
 	"background_page": "html/background.html"

@@ -1,5 +1,5 @@
 (function() {
-  var Configuration, ESChecker, Module, ModuleView, Parser, Registration, Searcher, root;
+  var Configuration, ESChecker, Module, ModuleList, ModuleView, Parser, Registration, Searcher, root;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Registration = (function() {
     function Registration() {}
@@ -61,10 +61,18 @@
   root.Searcher = Searcher;
   Configuration = (function() {
     function Configuration() {}
+    Configuration.DEFAULT_URL = "https://es.fhnw.ch/node/";
+    Configuration.DEFAULT_INTERVAL = 300000;
     Configuration.prototype.getUrl = function() {
+      if (localStorage.getItem("url") === null) {
+        localStorage["url"] = Configuration.DEFAULT_URL;
+      }
       return localStorage["url"];
     };
     Configuration.prototype.getInterval = function() {
+      if (localStorage.getItem("interval") === null) {
+        localStorage["interval"] = Configuration.DEFAULT_INTERVAL;
+      }
       return localStorage["interval"];
     };
     Configuration.prototype.setInterval = function(interval) {
@@ -163,7 +171,7 @@
     ModuleView.prototype.module = null;
     ModuleView.prototype.node = null;
     ModuleView.prototype.detail_node = null;
-    ModuleView.prototype.MAX_TITLE_LENGTH = 45;
+    ModuleView.prototype.MAX_TITLE_LENGTH = 40;
     function ModuleView(modul) {
       this.toggleDetailView = __bind(this.toggleDetailView, this);      this.module = modul;
     }
@@ -252,46 +260,55 @@
       header.appendChild(h3);
       return header;
     };
-    ModuleView.initView = function() {
-      var bg;
-      chrome.browserAction.setBadgeText({
-        text: ""
-      });
-      bg = chrome.extension.getBackgroundPage();
-      bg.unregisteredModules = 0;
-      if (bg.checker.getModules()) {
-        return this.showModules(bg.checker.getModules());
-      }
-    };
-    ModuleView.showModules = function(modules) {
-      var mod, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = modules.length; _i < _len; _i++) {
-        mod = modules[_i];
-        _results.push(document.body.appendChild(new ModuleView(mod).getNode()));
-      }
-      return _results;
-    };
     return ModuleView;
   })();
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.ModuleView = ModuleView;
   ESChecker = (function() {
+    ESChecker.prototype.isConnected = false;
     function ESChecker(config) {
       this.config = config;
-      this.parser = new Parser();
+      this.startChecking = __bind(this.startChecking, this);
+      this.check = __bind(this.check, this);
+      this.getOverviewHtml = __bind(this.getOverviewHtml, this);
+      this.parser = new Parser(this.config.getUrl());
       this.searcher = new Searcher();
-      this.modules = new Array();
+      this.modules = false;
     }
     ESChecker.prototype.getModules = function() {
       return this.modules;
     };
+    ESChecker.prototype.getOverviewHtml = function() {
+      var hadError, html;
+      hadError = false;
+      html = "";
+      $.ajax({
+        url: this.config.getUrl() + "/36",
+        success: __bind(function(data) {
+          return html = data;
+        }, this),
+        error: __bind(function(data) {
+          return hadError = true;
+        }, this),
+        dataType: "text",
+        async: false
+      });
+      if (hadError === true) {
+        return false;
+      }
+      return html;
+    };
     ESChecker.prototype.check = function() {
-      var cnt;
+      var cnt, data;
+      this.isConnected = true;
       this.modules = new Array();
       cnt = 0;
-      this.parser.getName(klassenliste_test);
-      this.modules[0] = this.parser.parseModule(klassenliste_test);
+      data = this.getOverviewHtml();
+      if (data === false) {
+        this.isConnected = false;
+        return;
+      }
+      this.modules = this.parser.getModules(data);
       cnt = this.searcher.getUnregisteredCount(this.modules);
       return this.onupdate(this.modules, cnt);
     };
@@ -304,4 +321,66 @@
   })();
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
   root.ESChecker = ESChecker;
+  ModuleList = (function() {
+    function ModuleList() {
+      this.clearView = __bind(this.clearView, this);
+      this.showModules = __bind(this.showModules, this);
+      this.initView = __bind(this.initView, this);
+      this.onupdate = __bind(this.onupdate, this);
+      this.showMessage = __bind(this.showMessage, this);      this.bg = chrome.extension.getBackgroundPage();
+    }
+    ModuleList.prototype.showMessage = function(message) {
+      var box;
+      box = document.createElement('div');
+      box.innerHTML = message;
+      box.setAttribute('class', 'message');
+      return document.body.appendChild(box);
+    };
+    ModuleList.prototype.onupdate = function(modules, unregisteredModules) {
+      if (unregisteredModules > 0) {
+        chrome.browserAction.setBadgeBackgroundColor({
+          color: [255, 0, 0, 255]
+        });
+        chrome.browserAction.setBadgeText({
+          text: '' + unregisteredModules
+        });
+      } else {
+        chrome.browserAction.setBadgeText({
+          text: ""
+        });
+      }
+      if (this.bg.checker.getModules()) {
+        return this.showModules(this.bg.checker.getModules());
+      } else {
+        return this.showMessage("Auf das System kann nicht zugegriffen werden.");
+      }
+    };
+    ModuleList.prototype.initView = function() {
+      return this.bg.checker.onupdate = this.onupdate;
+    };
+    ModuleList.prototype.showModules = function(modules) {
+      var mod, _i, _len, _results;
+      this.clearView();
+      _results = [];
+      for (_i = 0, _len = modules.length; _i < _len; _i++) {
+        mod = modules[_i];
+        _results.push(document.body.appendChild(new ModuleView(mod).getNode()));
+      }
+      return _results;
+    };
+    ModuleList.prototype.clearView = function() {
+      var node, _results;
+      node = document.body;
+      if (node.hasChildNodes()) {
+        _results = [];
+        while (node.childNodes.length >= 1) {
+          _results.push(node.removeChild(node.firstChild));
+        }
+        return _results;
+      }
+    };
+    return ModuleList;
+  })();
+  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+  root.ModuleList = ModuleList;
 }).call(this);

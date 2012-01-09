@@ -1,27 +1,49 @@
 class ESChecker
+	isConnected: false
+
 	constructor: (@config) ->
-		@parser = new Parser()
+		@parser = new Parser(@config.getUrl())
 		@searcher = new Searcher()
-		@modules = new Array()
+		@modules = false
 
 	getModules: () -> return @modules
 
-	check: () ->
+	getOverviewHtml: () =>
+		hadError = false
+		html = ""
+
+		$.ajax({
+			url: @config.getUrl() + "/36",
+			success: (data) => (html = data),
+			error: (data) => (hadError = true),
+			dataType: "text", async: false})
+
+		if hadError == true
+			return false
+
+		return html
+
+	check: () =>
+		@isConnected = true
 		@modules = new Array()
 		cnt = 0
 
-		@parser.getName(klassenliste_test)
-		@modules[0] = @parser.parseModule(klassenliste_test)
+		data = @getOverviewHtml()
+
+		if data == false
+			@isConnected = false
+			return
+
+		@modules = @parser.getModules(data)
 		cnt = @searcher.getUnregisteredCount(@modules)
 
 		@onupdate(@modules, cnt)
 
-	startChecking: () ->
+	startChecking: () =>
 		@check()
 		setInterval(@check, @config.getInterval())
 
-	onupdate: (modules, unregistered_count) ->
-		
+	onupdate: (modules, unregistered_count) -> 
 
 root = exports ? this
 root.ESChecker = ESChecker

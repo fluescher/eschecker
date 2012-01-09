@@ -22,7 +22,7 @@ class Parser
 
 		moduleTables = $(overviewHTML).find("table")
 		moduleTables = moduleTables.filter((index, element, array) -> return (index != 0) )
-
+		
 		moduleTables.each((index, element) =>
 			acturl = $(element).find("tr td a").last().attr("href")
 
@@ -36,7 +36,7 @@ class Parser
 
 	parseModule: (classListHTML) =>
 		actual = new Module()
-
+		
 		actual.name = $(classListHTML).find("div#content_mit_menu p b").text()
 		rows = $(classListHTML).find("table").find("tr")
 

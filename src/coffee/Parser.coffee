@@ -38,6 +38,7 @@ class Parser
 		actual = new Module()
 		
 		actual.name = $(classListHTML).find("div#content_mit_menu p b").text()
+		actual.getmaxregistrations()
 		rows = $(classListHTML).find("table").find("tr")
 
 		rows.each((index, element) =>

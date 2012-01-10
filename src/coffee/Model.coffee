@@ -9,6 +9,7 @@ class Registration
 
 class Module
 	name: ""
+	maxregistrations: 0
 	shortname: ""
 	position: 0
 	registrations: []
@@ -16,6 +17,11 @@ class Module
 	
 	constructor: () ->
 		@registrations = []
+	
+	getmaxregistrations: () ->
+		@maxregistrations = @name.match(/\/\s\d+\s/).toString()
+		@maxregistrations = @maxregistrations.substring(2)
+		@maxregistrations = @maxregistrations.trim()
 
 
 root = exports ? this

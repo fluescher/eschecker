@@ -25,7 +25,7 @@ class ModuleView
 			title.innerHTML = @getReadableTitle(@module.name)
 		
 			registration = document.createElement('div')
-			registration.innerHTML = @module.position + " / " + @module.registrations.length
+			registration.innerHTML = @module.position + " / " + @module.maxregistrations
 			$(registration).addClass('registrationCount')
 			if @module.amIRegistered
 				$(registration).addClass('green')

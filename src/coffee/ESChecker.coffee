@@ -1,6 +1,4 @@
 class ESChecker
-	isConnected: false
-
 	constructor: (@config) ->
 		@parser = new Parser(@config.getUrl())
 		@searcher = new Searcher()
@@ -31,12 +29,12 @@ class ESChecker
 		data = @getOverviewHtml()
 
 		if data == false
-			@isConnected = false
+			@modules = false
 			return
 
 		@modules = @parser.getModules(data)
-		cnt = @searcher.getUnregisteredCount(@modules)
-
+		cnt = @searcher.getUnregisteredCount(@modules) if @modules != false
+		
 		@onupdate(@modules, cnt)
 
 	startChecking: () =>

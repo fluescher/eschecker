@@ -24,6 +24,7 @@
 			$(status).slideToggle('slow', function() {
 					setTimeout(function() {$(status).slideToggle();}, 3000);
 				});
+			chrome.extension.getBackgroundPage().checker.check();
 		}
 
 		// Restores select box state to saved value from localStorage.

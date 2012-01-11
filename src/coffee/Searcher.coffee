@@ -5,6 +5,8 @@ class Searcher
 		for mod in modules
 			cnt++ if !mod.amIRegistered
 
+		return cnt
+
 	getMyRegistration: (name, module) => 
 		registration = new Registration()
 

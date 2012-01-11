@@ -35,13 +35,19 @@ class ESChecker
 		@modules = @parser.getModules(data)
 		cnt = @searcher.getUnregisteredCount(@modules) if @modules != false
 		
-		@onupdate(@modules, cnt)
+		if cnt > 0
+			chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]})
+			chrome.browserAction.setBadgeText({text: '' + cnt})
+		else
+			chrome.browserAction.setBadgeText({text: ""})
+
+		@onupdate()
 
 	startChecking: () =>
 		@check()
 		setInterval(@check, @config.getInterval())
 
-	onupdate: (modules, unregistered_count) -> 
+	onupdate: () ->
 
 root = exports ? this
 root.ESChecker = ESChecker

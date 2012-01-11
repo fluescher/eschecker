@@ -9,13 +9,7 @@ class ModuleList
 
 		document.body.appendChild(box)
 
-	onupdate: (modules, unregisteredModules) =>
-		if unregisteredModules > 0
-			chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]})
-			chrome.browserAction.setBadgeText({text: '' + unregisteredModules}) 
-		else
-			chrome.browserAction.setBadgeText({text: ""})
-
+	onupdate: () =>
 		if @bg.checker.getModules()
 			@showModules(@bg.checker.getModules())
 		else

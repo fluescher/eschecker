@@ -1,6 +1,6 @@
 {
     "name": "ES Checker",
-    "version": "0.3",
+    "version": "0.4",
     "description": "Check the modules you are written in and get notifications when something's changed.",
     "icons": {
     	"128": "img/logo.png"

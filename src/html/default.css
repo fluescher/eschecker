@@ -97,8 +97,27 @@ div.yellow {
 
 /* Message box */
 div.message {
-	background-color: yellow;
+	height: 60px;
+	
+	background-color: #FFFF66;
+	border: solid 1px #DDDD44;
+	padding: 5px;
 	margin: 5px;
+	
+	text-align: center;
+}
+
+span.message-title {
+	display:block;
+	font-weight: bold;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+span.message-desc {
+	display:block;
+	float:left;
+	text-align: left;
 }
 
 /* Scrollbar */

@@ -1,6 +1,6 @@
 class ESChecker
 	constructor: (@config) ->
-		@parser = new Parser(@config.getUrl())
+		@parser = new Parser(@config)
 		@searcher = new Searcher()
 		@modules = false
 

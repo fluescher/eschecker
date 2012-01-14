@@ -2,11 +2,9 @@
 class Parser 
 	TEMP_REGISTERED: "provisorisch eingeschrieben"
 	myself: { name: "", prename: "" }
-	baseUrl: ""
 	searcher: new Searcher()
 
-	constructor: (base) -> 
-		@baseUrl = base
+	constructor: (@config) -> 
 
 	getName: (overviewHTML) =>
 		nameParts = $(overviewHTML).find("div#Menu_Titel").text().trim().split(" ")
@@ -27,7 +25,7 @@ class Parser
 			acturl = $(element).find("tr td a").last().attr("href")
 
 			$.ajax({
-				url: @baseUrl + "/" + acturl,
+				url: @config.getUrl() + "/" + acturl,
 				success: (data) => modules.push(@parseModule(data)),
 				dataType: "text", async: false})
 		)

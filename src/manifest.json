@@ -12,8 +12,7 @@
     },
     "options_page": "html/options.html",
     "permissions": [
-        "https://es.fhnw.ch/",
-		"tabs"
+        "https://es.fhnw.ch/"
     ],
 	"background_page": "html/background.html"
 }

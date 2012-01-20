@@ -14,5 +14,6 @@
     "permissions": [
         "https://es.fhnw.ch/"
     ],
-	"background_page": "html/background.html"
+	"background_page": "html/background.html",
+    "homepage_url": "http://florox.github.com/eschecker"
 }

@@ -2,6 +2,9 @@ CHROME_BIN := $(shell which chromium-browser)
 ifeq ($(strip $(CHROME_BIN)),)
 	override CHROME_BIN = $(shell which chrome-browser)
 endif
+ifeq ($(strip $(CHROME_BIN)),)
+	override CHROME_BIN = $(shell which google-chrome)
+endif
 COFFEE_BIN := $(shell which coffee)
 
 JS_DIR		 := src/js

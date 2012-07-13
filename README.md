@@ -7,8 +7,8 @@ the University of Applied Sciences in Northwestern Switzerland (FHNW).
 Want to use it?
 ---------------
 
-Currently, there's no stable release. if you already want to use it or to hack on it
-you can make a clone and load the src directory as extracted extension in chrome.
+You can browse to http://florox.github.com/eschecker/ and install the plugin
+by clicking the install button.
 
 Contributing
 ------------

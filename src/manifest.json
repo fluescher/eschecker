@@ -1,6 +1,7 @@
 {
     "name": "ES Checker",
     "version": "0.5",
+    "manifest_version": 2,
     "description": "Check the modules you are written in and get notifications when something's changed.",
     "icons": {
     	"128": "img/logo.png"
